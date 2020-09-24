@@ -1,3 +1,3 @@
 Basic JavaScript Project
-# Include Basic Caliculator
-# Includes Basic function and condtions
+1. Include Basic Caliculator
+2. Includes Basic function and condtions
