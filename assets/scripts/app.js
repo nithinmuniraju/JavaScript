@@ -24,47 +24,62 @@ function writeToLog(method, previousValue, enteredValue, finalResult){
     logger.push(logMethod);
     console.log('Log', logger);
 }
-function add() {
+
+function calculateResult(operation){
     const userInputValue = getUserInputValue();
+    // [ ! ] ==> return true only on [0, "", NULL, Undefined, NAN]
+    // return FALSE on no match
+    if(operation !== "ADD" && operation !== "SUB" && operation !== "MULTIPLY" && operation !== "DIVIDE" || !userInputValue){
+        return;
+    }
+
     const preResult = currentInput;
-    currentInput += userInputValue;
-    readWriteOutput('+', preResult, userInputValue);
-    userInput.value = '';
-    console.log('HIT', preResult);
-    writeToLog('ADD', preResult, userInputValue, currentInput); // Logger
+    let operator;
+    if(operation === "ADD"){
+        operator = "+"
+        currentInput += userInputValue;
+    } else if(operation === "SUB") {
+        operator = "-"
+        currentInput -= userInputValue;
+    } else if(operation === "MULTIPLY") {
+        operator = "*"
+        currentInput *= userInputValue;
+    } else {
+        operator = "/"
+        currentInput /= userInputValue;
+    }
+    
+    readWriteOutput(operator, preResult, userInputValue);
+    writeToLog(operation, preResult, userInputValue, currentInput);
+}
+function add() {
+    // const userInputValue = getUserInputValue();
+    // const preResult = currentInput;
+    // currentInput += userInputValue;
+    // readWriteOutput('+', preResult, userInputValue);
+    // userInput.value = '';
+    // console.log('HIT', preResult);
+    // writeToLog('ADD', preResult, userInputValue, currentInput); // Logger
     // currentInput = currentInput + userInputValue;
     // const valuesEntred = `${currentInput} + ${userInputValue}`;
     // outputResult(currentInput, valuesEntred);
+    calculateResult('ADD');
+    userInput.value = '';
 }
 
 function subtract() {
-    const userInputValue = getUserInputValue();
-    const preResult = currentInput;
-    currentInput -= userInputValue;
-    readWriteOutput('-', preResult, userInputValue);
+    calculateResult('SUB');
     userInput.value = '';
-    writeToLog('SUB', preResult, userInputValue, currentInput); // Logger
-    // currentInput = currentInput - userInputValue;
 }
 
 function multiply() {
-    const userInputValue = getUserInputValue();
-    const preResult = currentInput;
-    currentInput *= userInputValue;
-    readWriteOutput('*', preResult, userInputValue);
+    calculateResult('MULTIPLY');
     userInput.value = '';
-    writeToLog('MULTI', preResult, userInputValue, currentInput); // Logger
-    // currentInput = currentInput * userInputValue;
 }
 
 function divide() {
-    const userInputValue = getUserInputValue();
-    const preResult = currentInput;
-    currentInput /=  userInputValue;
-    readWriteOutput('/', preResult, userInputValue);
+    calculateResult('DIVIDE');
     userInput.value = '';
-    writeToLog('DIV', preResult, userInputValue, currentInput); // Logger
-    // currentInput = currentInput / userInputValue;
 }
 /* 
 Add event listener for the add button 
