@@ -85,7 +85,40 @@ function divide() {
 Add event listener for the add button 
 Add event listerner listens for the events mentioned in first parameter
 */
-addBtn.addEventListener('click', add);
-subtractBtn.addEventListener('click', subtract);
-multiplyBtn.addEventListener('click', multiply);
-divideBtn.addEventListener('click', divide);
+// addBtn.addEventListener('click', add);
+// subtractBtn.addEventListener('click', subtract);
+// multiplyBtn.addEventListener('click', multiply);
+// divideBtn.addEventListener('click', divide);
+
+
+
+/*******************
+ * Using Bind method
+ * for the calculator
+ *******************/
+
+function commonCalculate(operation){
+    let operator;
+    let previousNumber = currentInput;
+    const userInputValue = getUserInputValue();
+    if(operation == 'ADD'){
+        operator = '+'
+        currentInput += userInputValue;
+    } else if(operation == 'SUB'){
+        operator = '-'
+        currentInput -= userInputValue;
+    } else if(operation == 'MULTIPLY'){
+        operator = '*'
+        currentInput *= userInputValue;
+    } else {
+        operator = '/'
+        currentInput /= userInputValue;
+    }
+
+    readWriteOutput(operator, previousNumber, userInputValue);
+    writeToLog(operation, previousNumber, userInputValue, currentInput);
+}
+addBtn.addEventListener('click', commonCalculate.bind(this, 'ADD'));
+subtractBtn.addEventListener('click', commonCalculate.bind(this, 'SUB'));
+multiplyBtn.addEventListener('click', commonCalculate.bind(this, 'MULTIPLY'));
+divideBtn.addEventListener('click', commonCalculate.bind(this, 'DIVIDE'));
